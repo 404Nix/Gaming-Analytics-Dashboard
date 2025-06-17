@@ -1,12 +1,22 @@
-import React from 'react'
-import Dashboard from './pages/Dashboard'
-const App = () => {
+import { useState } from "react";
+import TopNav from "./components/TopNav";
+import Dashboard from "./pages/Dashboard";
+import AdminPanel from "./pages/AdminPanel";
+
+function App() {
+  const [currentView, setCurrentView] = useState("Dashboard");
+
   return (
-    <div className="App">
-      <h1 className="text-2xl font-bold p-4">🎮 Gaming Analytics Dashboard</h1>
-      <Dashboard />
+    <div className="min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e3a8a]">
+      <TopNav currentView={currentView} setCurrentView={setCurrentView} />
+
+      <main className="p-6">
+        {currentView === "Dashboard" && <Dashboard />}
+        {currentView === "Admin Panel" && <AdminPanel />}
+        {currentView === "Login" && <div className="text-white">Login Page (Coming soon)</div>}
+      </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
