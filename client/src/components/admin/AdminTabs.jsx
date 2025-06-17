@@ -7,12 +7,12 @@ const AdminTabs = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <div className="flex bg-[#1e293b] p-2 rounded-xl mb-6">
+    <div className="flex bg-[#1e293b] p-2 rounded-xl mb-6 justify-around">
       {tabs.map((tab) => (
         <button
           key={tab.label}
           onClick={() => setActiveTab(tab.label)}
-          className={`px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition-all ${
+          className={`px-3 py-2 rounded-lg font-medium text-sm flex gap-2 transition-all w-full ${
             activeTab === tab.label
               ? "bg-white text-black shadow"
               : "text-gray-300 hover:text-white"

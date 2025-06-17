@@ -4,7 +4,7 @@ import { BsPerson } from "react-icons/bs";
 
 const LiveMatchCard = () => {
   return (
-    <div className="bg-gradient-to-r from-[#2a3551] to-[#2e3859] border border-white/10 rounded-lg p-4 flex justify-between items-start text-white shadow-sm hover:shadow-md transition">
+    <div className="bg-gradient-to-r from-[#2a3551] to-[#23305a6c] border border-white/10 rounded-lg p-4 flex justify-between items-start text-white shadow-sm hover:shadow-md transition">
       {/* Left Side (Icon + Info) */}
       <div className="flex gap-3 items-start">
         <FaTrophy className="text-yellow-400 text-lg mt-1" />

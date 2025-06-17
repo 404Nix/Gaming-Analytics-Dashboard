@@ -36,8 +36,7 @@ const PopularGamesChart = () => {
     maintainAspectRatio: false,
     animation: {
       animateScale: true,
-      duration: 1000,
-      easing: "easeOutBack"
+      duration: 700,
     }
   };
 

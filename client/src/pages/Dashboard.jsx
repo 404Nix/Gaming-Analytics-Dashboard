@@ -9,7 +9,7 @@ import LiveMatchFeed from "../components/LiveMatchFeed";
 import AdminPanel from "./AdminPanel";
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e3a8a] text-white">
+    <div className="min-h-screen text-white">
       {/* <AdminPanel /> */}
       <div className="px-6 py-8">
         <div className="flex justify-between items-center mb-4">
@@ -44,7 +44,7 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
           <LeaderboardChart />
           <PopularGamesChart />
           <PlayerActivityChart />
