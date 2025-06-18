@@ -6,8 +6,35 @@ import PopularGamesChart from "../components/PopularGamesChart";
 import PlayerActivityChart from "../components/PlayerActivityChart";
 import RewardDistributionChart from "../components/RewardDistributionChart";
 import LiveMatchFeed from "../components/LiveMatchFeed";
-import AdminPanel from "./AdminPanel";
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
 const Dashboard = () => {
+
+  const [stats, setStats] = useState({
+    players: 0,
+    games: 0,
+    matches: 0,
+    rewards: 0
+  });
+
+  const fetchStats = async () => {
+      try {
+        const res = await axios.get('/api/stats');
+        // console.log(res.data)
+        setStats(res.data);
+      } catch (err) {
+        console.error('Error fetching stats:', err);
+      }
+    };
+
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
+
+
   return (
     <div className="min-h-screen text-white">
       {/* <AdminPanel /> */}
@@ -17,29 +44,29 @@ const Dashboard = () => {
           <span className="text-green-400 text-sm">● Live Updates Active</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
           <StatCard
             title="Total Players"
-            value="9"
-            icon={<FaUser />}
+            value={stats.players}
+            icon="👤"
             iconBg="bg-blue-600"
           />
           <StatCard
             title="Active Games"
-            value="5"
-            icon={<FaGamepad />}
+            value={stats.games}
+            icon="🎮"
             iconBg="bg-green-600"
           />
           <StatCard
             title="Total Matches"
-            value="11"
-            icon={<FaTrophy />}
+            value={stats.matches}
+            icon="🏆"
             iconBg="bg-yellow-500"
           />
           <StatCard
             title="Rewards Claimed"
-            value="5"
-            icon={<FaStar />}
+            value={stats.rewards}
+            icon="🎁"
             iconBg="bg-purple-600"
           />
         </div>

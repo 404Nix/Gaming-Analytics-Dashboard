@@ -7,6 +7,7 @@ const gameRouter = require("./routes/games.routes");
 const matchRouter = require("./routes/matches.routes")
 const rewardRouter = require("./routes/rewards.routes")
 const analyticsRouter = require("./routes/analytics.routes")
+const dashboardStats = require('./routes/dashboardStats.routes')
 require("dotenv").config();
 
 app.use(cors());
@@ -17,6 +18,9 @@ app.use('/api/games', gameRouter)
 app.use('/api/matches', matchRouter)
 app.use('/api/rewards', rewardRouter)
 app.use("/api/analytics", analyticsRouter);
+
+app.use('/api/stats', dashboardStats);
+
 
 
 mongoose

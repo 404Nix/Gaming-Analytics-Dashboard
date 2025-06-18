@@ -103,3 +103,21 @@ exports.getRewardDistribution = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+exports.getDashboardStats = async (req, res) => {
+  try {
+    const [players, games, matches, rewards] = await Promise.all([
+      playerModel.countDocuments(),
+      gameModel.countDocuments(),
+      matchModel.countDocuments(),
+      rewardModel.countDocuments()
+    ]);
+
+    // console.log(players);
+
+    res.json({ players, games, matches, rewards });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
