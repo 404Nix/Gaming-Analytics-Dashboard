@@ -1,68 +1,52 @@
-// seed.js
-const mongoose = require("mongoose");
-const Player = require("./models/player.model");
-const Game = require("./models/game.model");
-const Match = require("./models/match.model");
-const Reward = require("./models/reward.model");
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import Reward from './models/reward.model.js'; // ✅ Adjust path as needed
 
-const MONGO_URI = "mongodb+srv://nikhil123:nikhil693@cluster0.u21yz.mongodb.net/gaming_dashboard"; // Change if needed
+const MONGO_URI = "mongodb+srv://nikhil123:nikhil693@cluster0.u21yz.mongodb.net/gaming_dashboard";
 
-const seed = async () => {
+
+const rewardTypes = [
+  "Gold Chest",
+  "Silver Chest",
+  "Bronze Chest",
+  "Epic Box",
+  "Mystery Box",
+  "Daily Bonus",
+  "Seasonal Reward",
+  "Event Loot",
+  "Milestone Unlock",
+  "XP Booster",
+];
+
+const seedRewards = async () => {
   try {
-    await mongoose.connect(MONGO_URI);
+    await mongoose.connect(MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-    // Clear existing data
-    await Promise.all([
-      Player.deleteMany({}),
-      Game.deleteMany({}),
-      Match.deleteMany({}),
-      Reward.deleteMany({}),
-    ]);
+    // Optional: Clear old data first
+    await Reward.deleteMany();
 
-    // Create sample games
-    const games = await Game.insertMany([
-      { title: "Battle Royale Arena" },
-      { title: "Space Conquest" },
-      { title: "Racing Thunder" },
-      { title: "Puzzle Master" },
-      { title: "Fantasy Quest" }
-    ]);
+    const rewards = [];
 
-    // Create sample players
-    const players = await Player.insertMany([
-      { name: "Alice", totalWins: 5, totalScore: 400 },
-      { name: "Bob", totalWins: 3, totalScore: 300 },
-      { name: "Charlie", totalWins: 7, totalScore: 500 },
-      { name: "Daisy", totalWins: 2, totalScore: 250 },
-      { name: "Eve", totalWins: 6, totalScore: 450 },
-    ]);
-
-    // Create matches
-    const matches = [];
-    for (let i = 0; i < 20; i++) {
-      const match = {
-        gameId: games[Math.floor(Math.random() * games.length)]._id,
-        playerId: players[Math.floor(Math.random() * players.length)]._id,
-        date: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
-      };
-      matches.push(match);
+    for (let type of rewardTypes) {
+      const claims = Math.floor(Math.random() * 30) + 20; // 20–50 entries per type
+      for (let i = 0; i < claims; i++) {
+        rewards.push({
+          rewardType: type,
+          claimedAt: new Date(Date.now() - Math.random() * 1e10),
+        });
+      }
     }
-    const matchDocs = await Match.insertMany(matches);
 
-    // Create rewards
-    const rewards = matchDocs.slice(0, 10).map((match, i) => ({
-      rewardType: i % 2 === 0 ? "Gold" : "Silver",
-      playerId: match.playerId,
-      matchId: match._id,
-    }));
     await Reward.insertMany(rewards);
-
-    console.log("✅ Database seeded successfully!");
-    process.exit();
+    console.log(`✅ Seeded ${rewards.length} rewards into DB.`);
+    process.exit(0);
   } catch (err) {
-    console.error("❌ Error seeding database:", err);
+    console.error("❌ Seeding failed:", err);
     process.exit(1);
   }
 };
 
-seed();
+seedRewards();

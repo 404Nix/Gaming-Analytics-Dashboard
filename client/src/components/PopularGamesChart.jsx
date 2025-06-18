@@ -10,7 +10,7 @@ const PopularGamesChart = () => {
   const fetchData = async () => {
     try {
       const res = await axios.get("/api/analytics/popular-games");
-      console.log(res.data)
+      // console.log(res.data)
 
       setChartData({
         labels: res.data.map((item) => item.gameTitle),
