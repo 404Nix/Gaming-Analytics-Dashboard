@@ -74,7 +74,8 @@ npm run dev</code></pre>
 <pre><code>https://gaming-analytics-dashboard-deox.onrender.com/api/</code></pre>
 
 <h2>🔐 Admin Access</h2>
-<p>Mock login system using localStorage. Any username/password will generate a token.</p>
+<p>Username: admin@example.com</p>
+<p>Password: 123456</p>
 
 <h2>📊 Advanced Features</h2>
 
