@@ -128,7 +128,7 @@ npm run dev</code></pre>
   <li>Triggers DB changes and live dashboard updates.</li>
 </ul>
 
-<h3>🛡️ Optional Admin View (JWT)</h3>
+<h3>🛡️ Admin View (JWT)</h3>
 <ul>
   <li>Basic login with token-based session control</li>
   <li>Admin-only visibility for analytics panel using JWT</li>
@@ -136,7 +136,8 @@ npm run dev</code></pre>
 </ul>
 
 <h2>📸 Screenshots</h2>
-<p><em>Add screenshots here (e.g., from /public folder)</em></p>
+<img src="/client/public/frontend.PNG" alt="Dashboard View" style="max-width:100%; border-radius:8px; margin-bottom:16px;" />
+
 
 <h2>🙌 Made By</h2>
 <p>Built with ❤️ by <a href="https://github.com/404Nix" target="_blank">404Nix</a></p>
