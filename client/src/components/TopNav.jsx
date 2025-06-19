@@ -1,6 +1,6 @@
 import landingImage from "../assets/landingImage.png";
 
-const TopNav = ({ currentView, setCurrentView }) => {
+const TopNav = ({ currentView, setCurrentView, onLogout }) => {
   const tabs = ["Dashboard", "Admin Panel", "Login"];
 
   return (
@@ -26,7 +26,12 @@ const TopNav = ({ currentView, setCurrentView }) => {
         ))}
       </nav>
 
-      <span className="text-sm text-gray-300">Welcome, Admin</span>
+      <button
+        className="bg-red-500 text-white px-4 py-2 rounded"
+        onClick={onLogout}
+      >
+        Logout
+      </button>
     </header>
   );
 };

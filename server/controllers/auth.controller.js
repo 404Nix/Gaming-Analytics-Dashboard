@@ -1,37 +1,45 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/admin.model');
+const Admin = require("../models/admin.model");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 require('dotenv').config()
 
-const JWT_SECRET = process.env.JWT_SECRET
-
 exports.register = async (req, res) => {
-
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
-    const existing = await User.findOne({ email });
-    if (existing) return res.status(400).json({ message: 'User already exists' });
+    const existing = await Admin.findOne({ email });
+    if (existing) return res.status(400).json({ message: "Email already registered" });
 
-    const user = new User({ email, password });
-    await user.save();
+    // console.log("New Hash:", hashedPassword);
+    const admin = new Admin({ email, password});
+    await admin.save();
 
-    res.status(201).json({ message: 'User registered' });
+    res.status(201).json({ message: "Admin registered successfully" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: "Registration failed", error: err.message });
   }
 };
 
 exports.login = async (req, res) => {
+  const { email, password } = req.body;
   try {
-    console.log(JWT_SECRET)
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
+    const admin = await Admin.findOne({ email });
+    if (!admin) return res.status(401).json({ message: "Invalid email or password" });
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+    console.log("🔐 Incoming Password:", password);
+    console.log("🔐 Stored Hash:", admin.password);
+    const isMatch = await bcrypt.compare(password, admin.password);
+    console.log("✅ Password Match?", isMatch);
+
+    if (!isMatch) return res.status(401).json({ message: "Invalid email or password" });
+
+    const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
     res.json({ token });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: "Login failed", error: err.message });
   }
 };
+
+
