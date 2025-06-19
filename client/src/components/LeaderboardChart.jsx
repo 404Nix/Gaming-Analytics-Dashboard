@@ -20,7 +20,7 @@ const LeaderboardChart = () => {
 
   const fetchChartData = async () => {
     try {
-      const res = await axios.get("/api/analytics/leaderboard");
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE}/api/analytics/leaderboard`);
       const players = res.data;
       setChartData({
         labels: players.map((player) => player.name),

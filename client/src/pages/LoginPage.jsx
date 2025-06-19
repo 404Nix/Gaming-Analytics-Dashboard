@@ -8,7 +8,7 @@ const LoginPage = ({ onLoginSuccess  }) => {
 
   const handleLogin = async () => {
   try {
-    const res = await axios.post("/api/auth/login", {
+    const res = await axios.post(`${import.meta.env.VITE_API_BASE}/api/auth/login`, {
       email,
       password,
     });
@@ -23,19 +23,19 @@ const LoginPage = ({ onLoginSuccess  }) => {
 
 
   return (
-    <div className="text-white space-y-4 max-w-md mx-auto">
-      <h2 className="text-xl font-semibold">Admin Login</h2>
+    <div className="bg-[#1e293b99] border border-white/10 p-6 rounded-xl text-white space-y-6 max-w-md mx-auto">
+      <h2 className="text-white text-4xl text-center p-4 mb-10">Admin Login</h2>
       <input
         type="email"
         placeholder="Email"
-        className="w-full p-2 rounded"
+        className="w-full p-2 rounded border border-white/10"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
         type="password"
         placeholder="Password"
-        className="w-full p-2 rounded"
+        className="w-full p-2 rounded border border-white/10"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -46,6 +46,11 @@ const LoginPage = ({ onLoginSuccess  }) => {
         Login
       </button>
       <p>{status}</p>
+      <div className="text-sm text-gray-400 text-center">
+            <p>Demo credentials:</p>
+            <p>Email: admin@example.com</p>
+            <p>Password: 123456</p>
+          </div>
     </div>
   );
 };

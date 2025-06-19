@@ -13,7 +13,7 @@ const AddRewardForm = () => {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const res = await axios.get("/api/players");
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE}/api/players`);
         setPlayers(res.data);
       } catch (err) {
         console.error("Failed to fetch players", err);
@@ -40,7 +40,7 @@ const AddRewardForm = () => {
     }
 
     try {
-      await axios.post("/api/rewards", formData);
+      await axios.post(`${import.meta.env.VITE_API_BASE}/api/rewards`, formData);
       alert("✅ Reward added!");
       setFormData({
         playerId: "",

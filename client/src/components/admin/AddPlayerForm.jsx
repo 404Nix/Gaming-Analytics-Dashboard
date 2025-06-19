@@ -25,7 +25,7 @@ const AddPlayerForm = () => {
     }
 
     try {
-      await axios.post("/api/players", formData);
+      await axios.post(`${import.meta.env.VITE_API_BASE}/api/players`, formData);
       alert("✅ Player added successfully");
       setFormData({ name: "", email: "", totalScore: 0, level: 1 });
     } catch (error) {

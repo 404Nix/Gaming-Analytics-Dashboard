@@ -4,7 +4,7 @@ const Game = require("./models/game.model");
 const Match = require("./models/match.model");
 const Reward = require("./models/reward.model");
 
-mongoose.connect("mongodb+srv://nikhil123:nikhil693@cluster0.u21yz.mongodb.net/gaming_dashboard", {
+mongoose.connect("", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

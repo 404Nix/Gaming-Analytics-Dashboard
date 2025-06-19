@@ -20,7 +20,7 @@ const PlayerActivityChart = () => {
 
   const fetchChartData = async () => {
     try {
-      const res = await axios.get("/api/analytics/player-activity");
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE}/api/analytics/player-activity`);
       // console.log(res.data)
       setChartData({
         labels: res.data.map((item) => item.date),

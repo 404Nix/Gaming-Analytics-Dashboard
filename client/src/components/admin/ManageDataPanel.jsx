@@ -13,7 +13,7 @@ const ManageDataPanel = () => {
   const fetchStats = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/stats");
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE}/api/stats`);
       setStats(res.data);
     } catch (err) {
       console.error("Failed to load stats", err);
@@ -31,7 +31,7 @@ const ManageDataPanel = () => {
     if (!confirm) return;
 
     try {
-      await axios.delete(`/api/clear/${type}`);
+      await axios.delete(`${import.meta.env.VITE_API_BASE}/api/clear/${type}`);
       alert(`✅ All ${type} cleared`);
       fetchStats(); // Refresh counts
     } catch (err) {

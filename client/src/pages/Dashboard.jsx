@@ -21,7 +21,7 @@ const Dashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const res = await axios.get('/api/stats');
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE}/api/stats`);
       setStats(res.data);
     } catch (err) {
       console.error('Error fetching stats:', err);

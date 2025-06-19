@@ -21,7 +21,7 @@ const RewardDistributionChart = () => {
 
   const fetchChartData = async () => {
     try {
-      const res = await axios.get("/api/analytics/reward-distribution");
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE}/api/analytics/reward-distribution`);
 
       const labels = res.data.map((item) => item.rewardType);
       const counts = res.data.map((item) => item.count);

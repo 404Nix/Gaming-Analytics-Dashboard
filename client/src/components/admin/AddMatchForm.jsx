@@ -18,8 +18,8 @@ const AddMatchForm = () => {
     const fetchData = async () => {
       try {
         const [playerRes, gameRes] = await Promise.all([
-          axios.get("/api/players"),
-          axios.get("/api/games"),
+          axios.get(`${import.meta.env.VITE_API_BASE}/api/players`),
+          axios.get(`${import.meta.env.VITE_API_BASE}/api/games`),
         ]);
 
         // console.log(playerRes)
@@ -49,7 +49,7 @@ const AddMatchForm = () => {
     }
 
     try {
-      await axios.post("/api/matches", formData);
+      await axios.post(`${import.meta.env.VITE_API_BASE}/api/matches`, formData);
       alert("✅ Match added!");
       setFormData({
         playerId: "",

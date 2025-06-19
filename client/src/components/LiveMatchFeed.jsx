@@ -10,7 +10,7 @@ const LiveMatchFeed = () => {
 
   const fetchMatches = async () => {
     try {
-      const res = await axios.get("/api/analytics/live-matches");
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE}/api/analytics/live-matches`);
       setMatches(res.data || []);
     } catch (err) {
       console.error("Error fetching live matches:", err);
