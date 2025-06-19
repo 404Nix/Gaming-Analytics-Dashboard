@@ -10,8 +10,10 @@ import {
 } from "chart.js";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+const socket = io("http://localhost:5000");
 
 const LeaderboardChart = () => {
   const [chartData, setChartData] = useState(null);
@@ -20,8 +22,6 @@ const LeaderboardChart = () => {
     try {
       const res = await axios.get("/api/analytics/leaderboard");
       const players = res.data;
-      // console.log(players)
-
       setChartData({
         labels: players.map((player) => player.name),
         datasets: [
@@ -41,6 +41,9 @@ const LeaderboardChart = () => {
 
   useEffect(() => {
     fetchChartData();
+
+    socket.on("update_rewards", fetchChartData);
+    return () => socket.off("update_rewards", fetchChartData);
   }, []);
 
   const options = {

@@ -10,8 +10,10 @@ import {
   Legend,
 } from "chart.js";
 import axios from "axios";
+import { io } from "socket.io-client";
 
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend);
+const socket = io("http://localhost:5000");
 
 const PlayerActivityChart = () => {
   const [chartData, setChartData] = useState(null);
@@ -19,6 +21,7 @@ const PlayerActivityChart = () => {
   const fetchChartData = async () => {
     try {
       const res = await axios.get("/api/analytics/player-activity");
+      // console.log(res.data)
       setChartData({
         labels: res.data.map((item) => item.date),
         datasets: [
@@ -40,6 +43,9 @@ const PlayerActivityChart = () => {
 
   useEffect(() => {
     fetchChartData();
+
+    socket.on("update_rewards", fetchChartData);
+    return () => socket.off("update_rewards", fetchChartData);
   }, []);
 
   if (!chartData) return <div className="text-white">Loading...</div>;

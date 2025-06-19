@@ -1,17 +1,17 @@
 import TopNav from "../components/TopNav";
 import StatCard from "../components/StatCard";
-import { FaUser, FaGamepad, FaTrophy, FaStar } from "react-icons/fa";
 import LeaderboardChart from "../components/LeaderboardChart";
 import PopularGamesChart from "../components/PopularGamesChart";
 import PlayerActivityChart from "../components/PlayerActivityChart";
 import RewardDistributionChart from "../components/RewardDistributionChart";
 import LiveMatchFeed from "../components/LiveMatchFeed";
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import io from 'socket.io-client';
+
+const socket = io("http://localhost:5000"); // ✅ Adjust this if you're using a deployed URL
 
 const Dashboard = () => {
-
   const [stats, setStats] = useState({
     players: 0,
     games: 0,
@@ -20,24 +20,26 @@ const Dashboard = () => {
   });
 
   const fetchStats = async () => {
-      try {
-        const res = await axios.get('/api/stats');
-        // console.log(res.data)
-        setStats(res.data);
-      } catch (err) {
-        console.error('Error fetching stats:', err);
-      }
-    };
-
+    try {
+      const res = await axios.get('/api/stats');
+      setStats(res.data);
+    } catch (err) {
+      console.error('Error fetching stats:', err);
+    }
+  };
 
   useEffect(() => {
     fetchStats();
-  }, []);
 
+    socket.on("update_stats", fetchStats); // ✅ real-time update
+
+    return () => {
+      socket.off("update_stats", fetchStats); // ✅ cleanup
+    };
+  }, []);
 
   return (
     <div className="min-h-screen text-white">
-      {/* <AdminPanel /> */}
       <div className="px-6 py-8">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-3xl font-bold">Gaming Analytics Dashboard</h2>
@@ -78,7 +80,7 @@ const Dashboard = () => {
           <RewardDistributionChart />
         </div>
 
-        <div className="">
+        <div>
           <LiveMatchFeed />
         </div>
       </div>

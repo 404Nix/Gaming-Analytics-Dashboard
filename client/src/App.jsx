@@ -5,14 +5,13 @@ import AdminPanel from "./pages/AdminPanel";
 import LoginPage from "./pages/Loginpage";
 import LoginReplaceCard from "./components/LoginReplaceCard";
 
-
 function App() {
   const [currentView, setCurrentView] = useState("Dashboard");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); 
+    setIsLoggedIn(!!token);
   }, []);
 
   const handleLoginSuccess = (token) => {
@@ -39,16 +38,17 @@ function App() {
         {currentView === "Dashboard" && <Dashboard />}
 
         {currentView === "Admin Panel" &&
-          (localStorage.getItem("token") ? (
+          (isLoggedIn ? (
             <AdminPanel />
           ) : (
             <LoginReplaceCard message="Please login to access this panel." />
           ))}
 
-        {currentView === "Login" && (!(localStorage.getItem("token")) ? (
+        {currentView === "Login" &&
+          (!isLoggedIn ? (
             <LoginPage onLoginSuccess={handleLoginSuccess} />
           ) : (
-            <LoginReplaceCard message="You Are Already Logged In." />
+            <LoginReplaceCard message="✅ You are already logged in." />
           ))}
       </main>
     </div>

@@ -10,8 +10,11 @@ import {
 } from "chart.js";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+const socket = io("http://localhost:5000");
 
 const RewardDistributionChart = () => {
   const [chartData, setChartData] = useState(null);
@@ -19,7 +22,6 @@ const RewardDistributionChart = () => {
   const fetchChartData = async () => {
     try {
       const res = await axios.get("/api/analytics/reward-distribution");
-      // console.log(res.data);
 
       const labels = res.data.map((item) => item.rewardType);
       const counts = res.data.map((item) => item.count);
@@ -43,6 +45,14 @@ const RewardDistributionChart = () => {
 
   useEffect(() => {
     fetchChartData();
+
+    socket.on("update_rewards", () => {
+      fetchChartData();
+    });
+
+    return () => {
+      socket.off("update_rewards");
+    };
   }, []);
 
   const options = {
