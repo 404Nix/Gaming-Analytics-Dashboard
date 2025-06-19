@@ -9,6 +9,7 @@ const rewardRouter = require("./routes/rewards.routes")
 const analyticsRouter = require("./routes/analytics.routes")
 const dashboardStats = require('./routes/dashboardStats.routes')
 const deleteRouter = require('./routes/delete.routes')
+const authRouter = require('./routes/auth.routes')
 require("dotenv").config();
 
 app.use(cors());
@@ -24,6 +25,9 @@ app.use('/api/stats', dashboardStats);
 
 // delete Route
 app.use('/api/clear', deleteRouter);
+
+// auth rotue
+app.use('/api/auth', authRouter);
 
 
 
