@@ -6,6 +6,7 @@ const matchSchema = new mongoose.Schema({
   result: { type: String, enum: ["win", "loss"] },
   durationInMin: Number,
   date: { type: Date, default: Date.now },
+  status: { type: String, enum: ["ongoing", "completed"], default: "completed" }, // <-- NEW
 });
 
 module.exports = mongoose.model("Match", matchSchema);

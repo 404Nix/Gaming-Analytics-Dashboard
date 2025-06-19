@@ -8,6 +8,7 @@ const matchRouter = require("./routes/matches.routes")
 const rewardRouter = require("./routes/rewards.routes")
 const analyticsRouter = require("./routes/analytics.routes")
 const dashboardStats = require('./routes/dashboardStats.routes')
+const deleteRouter = require('./routes/delete.routes')
 require("dotenv").config();
 
 app.use(cors());
@@ -20,6 +21,9 @@ app.use('/api/rewards', rewardRouter)
 app.use("/api/analytics", analyticsRouter);
 
 app.use('/api/stats', dashboardStats);
+
+// delete Route
+app.use('/api/clear', deleteRouter);
 
 
 

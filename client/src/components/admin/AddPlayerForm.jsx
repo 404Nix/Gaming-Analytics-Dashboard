@@ -1,57 +1,99 @@
-import { FaEnvelope } from "react-icons/fa";
+import { useState } from "react";
+import axios from "axios";
 
 const AddPlayerForm = () => {
-  return (
-    <div className="bg-[#1e293b99] border border-white/10 p-6 rounded-xl text-white space-y-6">
-      <h2 className="text-2xl font-bold">Add New Player</h2>
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    totalScore: 0,
+    level: 1,
+  });
 
-      <div className="grid md:grid-cols-2 gap-4">
-        {/* Player Name */}
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "totalScore" || name === "level" ? Number(value) : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email) {
+      alert("Please enter both name and email.");
+      return;
+    }
+
+    try {
+      await axios.post("/api/players", formData);
+      alert("✅ Player added successfully");
+      setFormData({ name: "", email: "", totalScore: 0, level: 1 });
+    } catch (error) {
+      console.error("Error adding player:", error);
+      alert("❌ Failed to add player");
+    }
+  };
+
+  return (
+    <div className="bg-[#1e293b99] border border-white/10 p-6 rounded-xl shadow-xl">
+      <h2 className="text-2xl font-bold text-white mb-6">Add New Player</h2>
+
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="text-sm mb-1 block">Player Name</label>
+          <label className="text-white block mb-2">Player Name</label>
           <input
             type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
             placeholder="Enter player name"
-            className="w-full bg-[#2e3859] p-3 rounded-lg text-sm focus:outline-none"
+            className="w-full p-3 rounded bg-[#2e3859] text-white"
           />
         </div>
 
-        {/* Email */}
-        <div className="relative">
-          <label className="text-sm mb-1 block">Email</label>
+        <div>
+          <label className="text-white block mb-2">Email</label>
           <input
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             placeholder="Enter email address"
-            className="w-full bg-[#2e3859] p-3 rounded-lg text-sm pr-10 focus:outline-none"
+            className="w-full p-3 rounded bg-[#2e3859] text-white"
           />
-          <FaEnvelope className="absolute right-3 top-9 text-gray-400" />
         </div>
 
-        {/* Score */}
         <div>
-          <label className="text-sm mb-1 block">Initial Score</label>
+          <label className="text-white block mb-2">Initial Score</label>
           <input
             type="number"
-            defaultValue={0}
-            className="w-full bg-[#2e3859] p-3 rounded-lg text-sm focus:outline-none"
+            name="totalScore"
+            value={formData.totalScore}
+            onChange={handleChange}
+            className="w-full p-3 rounded bg-[#2e3859] text-white"
           />
         </div>
 
-        {/* Level */}
         <div>
-          <label className="text-sm mb-1 block">Level</label>
+          <label className="text-white block mb-2">Level</label>
           <input
             type="number"
-            defaultValue={1}
-            className="w-full bg-[#2e3859] p-3 rounded-lg text-sm focus:outline-none"
+            name="level"
+            value={formData.level}
+            onChange={handleChange}
+            className="w-full p-3 rounded bg-[#2e3859] text-white"
           />
         </div>
-      </div>
 
-      {/* Button */}
-      <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-medium">
-        Add Player
-      </button>
+        <div className="col-span-full">
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded shadow"
+          >
+            Add Player
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

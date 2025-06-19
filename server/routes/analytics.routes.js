@@ -6,5 +6,6 @@ router.get('/leaderboard', analytics.getLeaderboard)
 router.get('/popular-games', analytics.getPopularGames)
 router.get('/player-activity', analytics.getPlayerActivity)
 router.get('/reward-distribution', analytics.getRewardDistribution)
+router.get('/live-matches', analytics.getLiveMatches)
 
 module.exports = router;

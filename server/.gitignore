@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 .env
+seed.js
 dist
 dist-ssr
 *.local

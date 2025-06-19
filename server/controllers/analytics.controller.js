@@ -121,3 +121,28 @@ exports.getDashboardStats = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+exports.getLiveMatches = async (req, res) => {
+  try {
+    const matches = await matchModel.find({ status: "completed" })
+      .sort({ date: -1 })
+      .limit(10)
+      .populate("playerId", "name")
+      .populate("gameId", "title");
+
+    const formatted = matches.map((match) => ({
+      id: match._id,
+      playerName: match.playerId?.name || "Unknown Player",
+      gameTitle: match.gameId?.title || "Unknown Game",
+      result: match.result,
+      duration: match.durationInMin,
+      playedAt: match.date,
+    }));
+
+    res.json(formatted);
+  } catch (err) {
+    console.error("Error fetching recent matches:", err);
+    res.status(500).json({ error: "Server Error" });
+  }
+};
