@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import TopNav from "./components/TopNav";
 import Dashboard from "./pages/Dashboard";
 import AdminPanel from "./pages/AdminPanel";
-import LoginPage from "./pages/Loginpage";
+import LoginPage from "./pages/LoginPage";
 import LoginReplaceCard from "./components/LoginReplaceCard";
 
 function App() {
