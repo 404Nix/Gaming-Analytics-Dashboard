@@ -21,12 +21,12 @@ const server = http.createServer(app);
 // ⚙️ Socket.IO setup
 const io = new Server(server, {
   cors: {
-    origin: "*", // ✅ Development only. Replace with frontend URL in production.
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
 
-// 📦 Make io accessible in routes/controllers
+
 app.set("io", io);
 
 // 🔧 Middlewares
